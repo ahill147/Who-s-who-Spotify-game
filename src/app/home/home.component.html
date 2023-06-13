@@ -7,9 +7,74 @@
       {{ genre }}
     </option>
   </select>
-  <select *ngIf="testArray.length > 0" [ngModel]="testArray" (ngModelChange)="setArtist($event)">
+  <select *ngIf="artistsArray.length > 0" [ngModel]="artistsArray">
     <option [value]=""></option>
-    <option [ngValue]="artist" *ngFor="let artist of testArray">{{ artist.name }}</option>
+    <option [ngValue]="artist" *ngFor="let artist of artistsArray">{{ artist.name }}</option>
+  </select>
+  <select *ngIf="artistSongs.length > 0" [ngModel]="artistSongs" (ngModelChange)="setSong($event)">
+    <option [value]=""></option>
+    <option [ngValue]="song" *ngFor="let song of artistSongs">Track {{ song.name }}</option>
+  </select>
+</div>
+
+<div *ngIf="authLoading || configLoading">Loading...</div>
+<div *ngIf="!authLoading && !configLoading" class="main">
+  <div class="inner-div">
+    <div class="header">
+      <h1 class="title">Who's Who</h1>
+      <h5 class="disclaimer">(The Spotify guessing game)</h5>
+      <p class="intro">Hello new player! Welcome to Who's Who, the Spotify guessing game!</p>
+      <p class="intro">To get started please first choose how many artists you would like in the pool of artists to
+        choose from. (Example: if you choose 2 then only 2 artists will be displayed in the game as choices)</p>
+      <p class="intro">Second please choose the amount of preview tracks to play as your hint. (Example: if you choose 3
+        then you will be provided 3 sample songs to listen to to give you more chances to guess the correct artist)</p>
+      <p class="intro">Finally please choose the genre of music you would like test yourself on.</p>
+    </div>
+    <div class="body">
+      <h4 class="select-label">Number of artists to choose from:</h4>
+      <select [ngModel]="numArtistsChosen" (ngModelChange)="setNumArtists($event)" class="dropdown">
+        <option [value]="null" disabled>How many artists?</option>
+        <option [value]="num" *ngFor="let num of numSelectionArtists">
+          {{ num }}
+        </option>
+      </select>
+      <h4 class="select-label">Number of songs to preview:</h4>
+      <select [ngModel]="numTracksChosen" (ngModelChange)="setNumTracks($event)" class="dropdown">
+        <option [value]="null" disabled>How many songs?</option>
+        <option [value]="num" *ngFor="let num of numSelectionSongs">
+          {{ num }}
+        </option>
+      </select>
+      <h4 class="select-label">What genre would you like to test yourself on?:</h4>
+      <select [(ngModel)]="selectedGenre" (ngModelChange)="setGenre($event)" class="dropdown">
+        <!-- need to try and get default "select genre to display in option" -->
+        <option [value]="null" [disabled]="true" [selected]="true">Select Genre</option>
+        <option [ngValue]="genre" *ngFor="let genre of genres">
+          {{ genre }}
+        </option>
+      </select>
+      <div class="button-div">
+        <button class="start" (click)="onSubmit()">Start Game</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- (ngModelChange)="setArtist($event)" -->
+
+
+
+<!-- <div *ngIf="!authLoading && !configLoading" class="main">
+  Genre:
+  <select [(ngModel)]="selectedGenre" (ngModelChange)="setGenre($event)">
+    <option [value]=""></option>
+    <option [value]="genre" *ngFor="let genre of genres">
+      {{ genre }}
+    </option>
+  </select>
+  <select *ngIf="artistsArray.length > 0" [ngModel]="artistsArray" (ngModelChange)="setArtist($event)">
+    <option [value]=""></option>
+    <option [ngValue]="artist" *ngFor="let artist of artistsArray">{{ artist.name }}</option>
   </select>
   <select *ngIf="artistSongs.length > 0" [ngModel]="artistSongs" (ngModelChange)="setSong($event)">
     <option [value]=""></option>
@@ -20,4 +85,4 @@
 <div class="test">
   <button class="play" (click)="playSong()" [disabled]="!selectedSong">Play</button>
   <button class="stop" (click)="stopSong()">Stop</button>
-</div>
+</div> -->
