@@ -11,12 +11,10 @@ export interface Artist {
   id: string
   name: string
   image: string
-  image: string
 }
 
 export interface Track {
   id: number
-  artistId: string
   artistId: string
   name: string
   preview: string
@@ -37,7 +35,6 @@ export class HomeComponent implements OnInit {
   configLoading: boolean = false;
   token: String = "";
 
-  artistsArray: Artist[] = [];
 
   artistsArray: Artist[] = [];
   artistSongs: Track[] = [];
@@ -46,12 +43,6 @@ export class HomeComponent implements OnInit {
   selectedPreview: string = ''
   currentSong: Howl | undefined = undefined
   trackNumber: number = 0
-
-  numArtistsChosen: number = 2
-  numTracksChosen: number = 1
-
-  numSelectionArtists: number[] = [2, 3, 4];
-  numSelectionSongs: number[] = [1, 2, 3];
 
   numArtistsChosen: number = 2
   numTracksChosen: number = 1
@@ -109,17 +100,6 @@ export class HomeComponent implements OnInit {
   }
 
   // selecting from dropdown will set the specified genre
-  // set the number of artists in guessing pool
-  setNumArtists(numArtistsChosen: number) {
-    this.numArtistsChosen = numArtistsChosen
-  }
-
-  // set the number of preview tracks to be played on game screen
-  setNumTracks(numTracksChosen: number) {
-    this.numTracksChosen = numTracksChosen
-  }
-
-  // selecting from dropdown will set the specified genre
   setGenre(selectedGenre: any) {
     this.selectedGenre = selectedGenre;
     console.log(this.selectedGenre);
@@ -131,9 +111,6 @@ export class HomeComponent implements OnInit {
   // once a genre has been picked we will then call
   // this method to fetch top artists by the selected genre
   getArtistData = async (t: any, genre: string) => {
-  // once a genre has been picked we will then call
-  // this method to fetch top artists by the selected genre
-  getArtistData = async (t: any, genre: string) => {
     const res = await fetchFromSpotify({
       token: t,
       endpoint: `search?q=genre:${genre}&type=artist&limit=30`
@@ -141,8 +118,6 @@ export class HomeComponent implements OnInit {
     const artistArray = res.artists.items.map((item: any) => {
       return {
         id: item.id,
-        name: item.name,
-        image: item.images[0].url
         name: item.name,
         image: item.images[0].url
       }
@@ -156,20 +131,6 @@ export class HomeComponent implements OnInit {
       artistArray[j] = temp
     }
 
-    // durstenfeld shuffle to shuffle array
-    for(let i = artistArray.length - 1; i > 0; i--) {
-      let j = Math.floor(Math.random() * (i + 1));
-      let temp = artistArray[i];
-      artistArray[i] = artistArray[j]
-      artistArray[j] = temp
-    }
-
-    // then we take previously selected number of artists and slice array using variable
-    this.artistsArray = artistArray.slice(0, this.numArtistsChosen);
-    // then select last element (since we are shuffling the array this should always produce diff results)
-    this.selectedArtist = this.artistsArray[this.artistsArray.length - 1]
-    // then call next method to get the selected artists songs
-    this.getArtistTracks(t, this.selectedArtist.id)
     // then we take previously selected number of artists and slice array using variable
     this.artistsArray = artistArray.slice(0, this.numArtistsChosen);
     // then select last element (since we are shuffling the array this should always produce diff results)
@@ -199,19 +160,9 @@ export class HomeComponent implements OnInit {
       data[j] = temp
     }
 
-    this.artistSongs = data.slice(0, this.numTracksChosen)
-    // doing the same as the method above shuffling and slicing at given index
-    for(let i = data.length - 1; i > 0; i--) {
-      let j = Math.floor(Math.random() * (i + 1))
-      let temp = data[i]
-      data[i] = data[j]
-      data[j] = temp
-    }
 
     this.artistSongs = data.slice(0, this.numTracksChosen)
   }
-
-  // everything below this line may have to be implmented on the game side
 
   // everything below this line may have to be implmented on the game side
 
