@@ -7,4 +7,17 @@
       {{ genre }}
     </option>
   </select>
+  <select *ngIf="testArray.length > 0" [ngModel]="testArray" (ngModelChange)="setArtist($event)">
+    <option [value]=""></option>
+    <option [ngValue]="artist" *ngFor="let artist of testArray">{{ artist.name }}</option>
+  </select>
+  <select *ngIf="artistSongs.length > 0" [ngModel]="artistSongs" (ngModelChange)="setSong($event)">
+    <option [value]=""></option>
+    <option [ngValue]="song" *ngFor="let song of artistSongs">Track {{ song.name }}</option>
+  </select>
+</div>
+
+<div class="test">
+  <button class="play" (click)="playSong()" [disabled]="!selectedSong">Play</button>
+  <button class="stop" (click)="stopSong()">Stop</button>
 </div>
