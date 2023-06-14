@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { GameService } from 'src/services/game';
 
 interface Artist {
+  id: number;
   name: string;
   image: string;
 }
@@ -23,15 +25,20 @@ interface GameData {
 })
 export class GameComponent implements OnInit {
   gameData!: GameData;
-  currentArtist!: Artist;
+  currentArtist: Artist | undefined = undefined;
   songs!: Song[];
-  artists!: Artist[];
+  artists: Artist[] = [];
 
   currentPlayingSong: Song | null = null;
   gameOver = false;
   isWinner = false;
 
+  constructor(private gameService: GameService){}
+
   ngOnInit() {
+    this.gameService.artistsArray.subscribe(artists => this.artists = artists);
+    this.gameService.artistSongs.subscribe(songs => this.songs = songs);
+    this.gameService.selectedArtist.subscribe(artist => this.currentArtist = artist);
     const gameDataString = localStorage.getItem('gameData');
     if (gameDataString) {
       this.gameData = JSON.parse(gameDataString);
@@ -41,7 +48,7 @@ export class GameComponent implements OnInit {
     }
     this.gameOver = false;
     this.isWinner = false;
-  } 
+  }
 
   playSong(song: Song) {
     this.currentPlayingSong = song;

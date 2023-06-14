@@ -1,7 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from '@angular/router';
 import fetchFromSpotify, { request } from "../../services/api";
-import { Howl, Howler } from 'howler';
+import { Howl } from 'howler';
+import { GameService } from '../../services/game';
 
 const AUTH_ENDPOINT =
   "https://nuod0t2zoe.execute-api.us-east-2.amazonaws.com/FT-Classroom/spotify-auth-token";
@@ -27,7 +28,7 @@ export interface Track {
 })
 
 export class HomeComponent implements OnInit {
-  constructor(private router: Router) {}
+  constructor(private gameData: GameService, private router: Router) {}
 
   genres: String[] = ["House", "Alternative", "J-Rock", "R&B"];
   selectedGenre: String = "";
@@ -130,8 +131,10 @@ export class HomeComponent implements OnInit {
     }
     // then we take previously selected number of artists and slice array using variable
     this.artistsArray = artistArray.slice(0, this.numArtistsChosen);
+    this.gameData.updateArtistsArray(artistArray.slice(0, this.numArtistsChosen));
     // then select last element (since we are shuffling the array this should always produce diff results)
     this.selectedArtist = this.artistsArray[this.artistsArray.length - 1]
+    this.gameData.updateSelectedArtist(this.artistsArray[this.artistsArray.length - 1])
     // then call next method to get the selected artists songs
     this.getArtistTracks(t, this.selectedArtist.id)
   }
@@ -158,6 +161,7 @@ export class HomeComponent implements OnInit {
     }
 
     this.artistSongs = data.slice(0, this.numTracksChosen)
+    this.gameData.updateArtistSongs(data.slice(0, this.numTracksChosen))
   }
 
   // everything below this line may have to be implmented on the game side
