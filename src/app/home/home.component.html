@@ -27,13 +27,14 @@
         </option>
       </select>
       <h4 class="select-label">What genre would you like to test yourself on?:</h4>
-      <select [(ngModel)]="selectedGenre" (ngModelChange)="setGenre($event)" class="dropdown">
+      <select [(ngModel)]="temp" (ngModelChange)="setGenre($event)" class="dropdown">
         <!-- need to try and get default "select genre to display in option" -->
-        <option [value]="null" [disabled]="true" [selected]="true">Select Genre</option>
+        <option [ngValue]="undefined" disabled selected>Select Genre</option>
         <option [ngValue]="genre" *ngFor="let genre of genres">
           {{ genre }}
         </option>
       </select>
+      <div *ngIf="error" class="error">{{ error }}</div>
       <div class="button-div">
         <button class="start" (click)="onSubmit()">Start Game</button>
       </div>

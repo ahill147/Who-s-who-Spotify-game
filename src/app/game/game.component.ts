@@ -1,19 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Howl } from 'howler';
+import { GameService } from 'src/services/game';
 
 interface Artist {
+  id?: string;
   name: string;
   image: string;
 }
 
-interface Song {
+interface Track {
+  id?: number;
+  artistId?: string;
   name: string;
   preview: string;
 }
 
 interface GameData {
   winningArtist: Artist;
-  tracks: Song[];
+  tracks: Track[];
   allArtists: Artist[];
 }
 
@@ -23,16 +28,19 @@ interface GameData {
   styleUrls: ['./game.component.css']
 })
 export class GameComponent implements OnInit {
-  constructor(private router: Router) {}
 
   gameData!: GameData;
-  currentArtist!: Artist;
-  songs!: Song[];
-  artists!: Artist[];
+  currentArtist: Artist | undefined = undefined;
+  songs!: Track[];
+  artists: Artist[] = [];
 
-  currentPlayingSong: Song | null = null;
+  currentSong: Howl | undefined = undefined
+  currentPlayingSong: Track | undefined = undefined;
+  selectedPreview: string = ''
   gameOver = false;
   isWinner = false;
+
+  constructor(private gameService: GameService, private router: Router){}
 
   ngOnInit() {
     const gameDataString = localStorage.getItem('gameData');
@@ -46,8 +54,8 @@ export class GameComponent implements OnInit {
     this.isWinner = false;
   }
 
-  playSong(song: Song) {
-    this.currentPlayingSong = song;
+  stopSong() {
+    this.currentSong?.stop()
   }
 
   onArtistSelected(artist: Artist) {
@@ -57,8 +65,8 @@ export class GameComponent implements OnInit {
   checkAnswer() {
     console.log('Selected Artist:', this.currentArtist);
     console.log('Current Artist:', this.gameData.winningArtist);
-  
-    if (this.currentArtist.name === this.gameData.winningArtist.name) {
+
+    if (this?.currentArtist?.name === this.gameData.winningArtist.name) {
       this.gameOver = true;
       this.isWinner = true;
     } else {

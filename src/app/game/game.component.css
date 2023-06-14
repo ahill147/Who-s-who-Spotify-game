@@ -81,7 +81,7 @@ img {
 }
 
 .play {
-  width: 30px;
+  /* width: 30px; */
   height: 30px;
   /* background-image: url('path/to/play-icon.png'); */
   background-size: cover;
