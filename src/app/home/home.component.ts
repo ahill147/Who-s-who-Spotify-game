@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from '@angular/router';
 import fetchFromSpotify, { request } from "../../services/api";
 import { Howl } from 'howler';
 import { Router } from "@angular/router";
@@ -8,11 +9,13 @@ const AUTH_ENDPOINT =
 const TOKEN_KEY = "whos-who-access-token";
 
 export interface Artist {
+export interface Artist {
   id: string
   name: string
   image: string
 }
 
+export interface Track {
 export interface Track {
   id: number
   artistId: string
@@ -36,6 +39,7 @@ export class HomeComponent implements OnInit {
   token: String = "";
 
   artistsArray: Artist[] = [];
+
   artistSongs: Track[] = [];
   selectedArtist: Artist | undefined = undefined;
   selectedSong: Track | undefined = undefined;
@@ -127,7 +131,6 @@ export class HomeComponent implements OnInit {
       artistArray[i] = artistArray[j]
       artistArray[j] = temp
     }
-
     // then we take previously selected number of artists and slice array using variable
     this.artistsArray = artistArray.slice(0, this.numArtistsChosen);
     // then select last element (since we are shuffling the array this should always produce diff results)
