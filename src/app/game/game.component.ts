@@ -24,7 +24,7 @@ export class GameComponent implements OnInit {
 
   playSong(song: Track) {
     this.stopCurrentSong();
-  
+
     this.currentSong = new Howl({
       src: [song.preview],
       html5: true,
@@ -35,11 +35,11 @@ export class GameComponent implements OnInit {
         console.log('Howl ERROR: ' + msg);
       },
     });
-  
+
     this.currentPlayingSong = song;
     this.currentSong.play();
   }
-  
+
   stopSong(song: Track) {
     if (this.currentPlayingSong && this.currentPlayingSong === song) {
       this.currentSong?.stop();
