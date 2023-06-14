@@ -1,43 +1,33 @@
-<!-- <h2>Guess the Artist</h2>
-
-<div *ngFor="let song of songs">
-  <h3>Play Song {{ song.name }}</h3>
-  <button (click)="playSong(song)">Play</button>
-  <button (click)="stopSong(song)">Stop</button>
-  <br /><br />
-  <div>
-    <h4>Choose the Artist:</h4>
-    <ul>
-      <li *ngFor="let artist of artists" (click)="checkAnswer(artist, song)">
-        {{ artist.name }}
-      </li>
-    </ul>
-  </div>
-</div>
-
-<div *ngIf="gameOver">
-  <h3 *ngIf="isWinner">Congratulations! You guessed correctly!</h3>
-  <h3 *ngIf="!isWinner">Oops! You guessed wrong!</h3>
-  <button (click)="restartGame()">Play Again</button>
-</div> -->
-
 <div *ngIf="!gameOver">
     <h2>Guess the Artist</h2>
-    <div *ngFor="let song of songs">
-      <div class="song-item">
-        <button class="play" (click)="playSong(song)"></button>
-        <span>{{ song.name }}</span>
-        <div class="artist-options">
-          <div
-            *ngFor="let artist of artists"
-            class="artist-option"
-            (click)="checkAnswer(artist, song)"
-          >
-            {{ artist.name }}
+    <div class="inner-div">
+      <div class="header">
+        <h1 class="title">Who's Who</h1>
+        <h5 class="disclaimer">(The Spotify guessing game)</h5>
+        <p class="intro">Hello new player! Welcome to Who's Who, the Spotify guessing game!</p>
+        <p class="intro">Now that you have chosen how many artists you would like in the pool of artists & the number of sample tracks</p>
+        <p class="intro">Please examine these tracks and choose the correct artist to win!</p>
+      </div>
+      <div class="body">
+        <h4 class="select-label">Preview Songs:</h4>
+        <div *ngFor="let song of songs">
+          <div class="song-item">
+            <button class="play" (click)="playSong(song)"></button>
+            <span>{{ song.name }}</span>
+            <div class="artist-options">
+              <div
+                *ngFor="let artist of artists"
+                class="artist-option"
+                (click)="checkAnswer(artist, song)">
+                {{ artist.name }}
+              </div>
+            </div>
           </div>
         </div>
+        <!-- <audio *ngIf="currentPlayingSong === selectedPreview" [src]="song.preview" controls></audio> -->
       </div>
-    </div>
+
+
   </div>
   
   <div *ngIf="gameOver">
