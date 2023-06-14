@@ -27,7 +27,7 @@ export interface Track {
 })
 
 export class HomeComponent implements OnInit {
-  constructor(private router: Router) { }
+  constructor(private router: Router) {}
 
   genres: String[] = ["House", "Alternative", "J-Rock", "R&B"];
   selectedGenre: String = "";
@@ -36,7 +36,6 @@ export class HomeComponent implements OnInit {
   token: String = "";
 
 
-  artistsArray: Artist[] = [];
   artistSongs: Track[] = [];
   selectedArtist: Artist | undefined = undefined;
   selectedSong: Track | undefined = undefined;
@@ -77,7 +76,6 @@ export class HomeComponent implements OnInit {
   }
 
   // load all fetched genre's from spotify
-  // load all fetched genre's from spotify
   loadGenres = async (t: any) => {
     this.configLoading = true;
     const response = await fetchFromSpotify({
@@ -104,7 +102,6 @@ export class HomeComponent implements OnInit {
     this.selectedGenre = selectedGenre;
     console.log(this.selectedGenre);
     console.log(TOKEN_KEY);
-    this.getArtistData(this.token, selectedGenre)
     this.getArtistData(this.token, selectedGenre)
   }
 

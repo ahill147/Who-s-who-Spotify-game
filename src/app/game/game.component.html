@@ -1,41 +1,23 @@
-<!-- <h2>Guess the Artist</h2>
-
-<div *ngFor="let song of songs">
-  <h3>Play Song {{ song.name }}</h3>
-  <button (click)="playSong(song)">Play</button>
-  <button (click)="stopSong(song)">Stop</button>
-  <br /><br />
-  <div>
-    <h4>Choose the Artist:</h4>
-    <ul>
-      <li *ngFor="let artist of artists" (click)="checkAnswer(artist, song)">
-        {{ artist.name }}
-      </li>
-    </ul>
-  </div>
-</div>
-
-<div *ngIf="gameOver">
-  <h3 *ngIf="isWinner">Congratulations! You guessed correctly!</h3>
-  <h3 *ngIf="!isWinner">Oops! You guessed wrong!</h3>
-  <button (click)="restartGame()">Play Again</button>
-</div> -->
-
-<div *ngIf="!gameOver">
+  <div *ngIf="!gameOver">
     <h2>Guess the Artist</h2>
+    <div class="artist-info">
+      <div class="artist-image">
+        <img [src]="currentArtist.image" alt="Artist Image" />
+      </div>
+      <div class="artist-name">
+        {{ currentArtist.name }}
+      </div>
+    </div>
     <div *ngFor="let song of songs">
       <div class="song-item">
         <button class="play" (click)="playSong(song)"></button>
         <span>{{ song.name }}</span>
-        <div class="artist-options">
-          <div
-            *ngFor="let artist of artists"
-            class="artist-option"
-            (click)="checkAnswer(artist, song)"
-          >
-            {{ artist.name }}
-          </div>
-        </div>
+        <audio *ngIf="currentPlayingSong === song" [src]="song.preview" controls></audio>
+      </div>
+    </div>
+    <div class="artist-options">
+      <div *ngFor="let artist of artists" class="artist-option" (click)="checkAnswer(artist)">
+        {{ artist.name }}
       </div>
     </div>
   </div>
