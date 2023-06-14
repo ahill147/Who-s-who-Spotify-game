@@ -1,0 +1,24 @@
+<div *ngIf="!gameOver">
+  <h2>Guess the Artist</h2>
+  <div *ngFor="let song of songs">
+    <div class="song-item">
+      <button class="play" (click)="playSong(song)"></button>
+      <span>{{ song.name }}</span>
+      <div class="artist-options">
+        <div
+          *ngFor="let artist of artists"
+          class="artist-option"
+          (click)="checkAnswer(artist, song)"
+        >
+          {{ artist.name }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="gameOver">
+  <h2 *ngIf="isWinner">Congratulations, you win!</h2>
+  <h2 *ngIf="!isWinner">Oops, wrong guess. Try again!</h2>
+  <button (click)="restartGame()">Play Again</button>
+</div>
