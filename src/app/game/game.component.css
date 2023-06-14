@@ -1,0 +1,159 @@
+/* .main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .inner-div {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 600px;
+    padding: 10px;
+  }
+  
+  .header {
+    text-align: center;
+  }
+  
+  .title {
+    margin-bottom: 0;
+  }
+  
+  .disclaimer {
+    color: rgba(160, 160, 160, 0.789);
+    margin-top: 0;
+  }
+  
+  .select-label {
+    margin: 0;
+    padding: 10px;
+  }
+  
+  .body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    border: 1px solid lightblue;
+    padding: 10px;
+    padding-bottom: 10px;
+    border-radius: 15px;
+    box-shadow: 0 0 4px lightblue;
+  }
+  
+  .button-div {
+    padding: 20px;
+  } */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Set the background color or image for the page */
+body {
+  background-color: #f0f0f0;
+  /* or */
+  /* background-image: url('path/to/image.jpg'); */
+  /* background-repeat: no-repeat; */
+  /* background-size: cover; */
+}
+
+/* Set styles for the main container */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Style the headings */
+h1, h2, h3 {
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Style the paragraph text */
+p {
+  font-family: Arial, sans-serif;
+  color: #666;
+  line-height: 1.5;
+}
+
+/* Style the buttons */
+button {
+  padding: 10px 20px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #555;
+}
+
+/* Style the images */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Style the artist cards */
+.artist-card {
+  margin-bottom: 20px;
+}
+
+.artist-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.artist-name {
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  color: #333;
+  margin-top: 10px;
+}
+
+/* Style the song items */
+.song-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.play {
+  width: 30px;
+  height: 30px;
+  /* background-image: url('path/to/play-icon.png'); */
+  background-size: cover;
+  border: none;
+  cursor: pointer;
+}
+
+/* Style the radio buttons and labels */
+.artist-selection input[type="radio"] {
+  margin-right: 5px;
+}
+
+/* Style the game over section */
+.game-over {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.game-over h2 {
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
