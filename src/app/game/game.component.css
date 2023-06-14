@@ -3,7 +3,7 @@
     align-items: center;
     justify-content: center;
   }
-  
+
   .inner-div {
     display: flex;
     flex-direction: column;
@@ -11,25 +11,25 @@
     width: 600px;
     padding: 10px;
   }
-  
+
   .header {
     text-align: center;
   }
-  
+
   .title {
     margin-bottom: 0;
   }
-  
+
   .disclaimer {
     color: rgba(160, 160, 160, 0.789);
     margin-top: 0;
   }
-  
+
   .select-label {
     margin: 0;
     padding: 10px;
   }
-  
+
   .body {
     display: flex;
     flex-direction: column;
@@ -41,7 +41,7 @@
     border-radius: 15px;
     box-shadow: 0 0 4px lightblue;
   }
-  
+
   .button-div {
     padding: 20px;
   } */
@@ -132,7 +132,7 @@ img {
 }
 
 .play {
-  width: 30px;
+  /* width: 30px; */
   height: 30px;
   /* background-image: url('path/to/play-icon.png'); */
   background-size: cover;

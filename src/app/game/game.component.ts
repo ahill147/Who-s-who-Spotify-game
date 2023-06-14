@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GameService } from '../../services/game';
+import { Howl } from 'howler';
 
 interface Artist {
   id?: string;
@@ -7,7 +8,7 @@ interface Artist {
   image: string;
 }
 
-interface Song {
+interface Track {
   id?: number;
   artistId?: string;
   name: string;
@@ -16,7 +17,7 @@ interface Song {
 
 interface GameData {
   winningArtist: Artist;
-  tracks: Song[];
+  tracks: Track[];
   allArtists: Artist[];
 }
 
@@ -28,10 +29,12 @@ interface GameData {
 export class GameComponent implements OnInit {
   gameData!: GameData;
   currentArtist: Artist | undefined = undefined;
-  songs!: Song[];
+  songs!: Track[];
   artists: Artist[] = [];
 
-  currentPlayingSong: Song | null = null;
+  currentSong: Howl | undefined = undefined
+  currentPlayingSong: Track | undefined = undefined;
+  selectedPreview: string = ''
   gameOver = false;
   isWinner = false;
 
@@ -41,7 +44,7 @@ export class GameComponent implements OnInit {
     this.gameService.artistsArray.subscribe(artists => this.artists = artists);
     this.gameService.artistSongs.subscribe(songs => this.songs = songs);
     this.gameService.selectedArtist.subscribe(artist => this.currentArtist = artist);
-    console.log(this.songs)
+    console.log('Game Service (Songs): ', this.songs)
     if(!this.artists.length) {
       const gameDataString = localStorage.getItem('gameData');
       if (gameDataString) {
@@ -49,16 +52,42 @@ export class GameComponent implements OnInit {
         this.currentArtist = this.gameData.winningArtist;
         this.songs = this.gameData.tracks;
         this.artists = this.gameData.allArtists;
-        console.log(this.songs)
+        console.log('Local Storage (songs): ', this.songs)
       }
       this.gameOver = false;
       this.isWinner = false;
     }
   }
 
-  playSong(song: Song) {
-    this.currentPlayingSong = song;
-    console.log(this.currentPlayingSong)
+  // playSong(song: Track) {
+  //   this.currentPlayingSong = song;
+  //   console.log(this.currentPlayingSong)
+  // }
+
+  playSong(selectedSong: Track) {
+    this.currentPlayingSong = selectedSong;
+    this.selectedPreview = selectedSong?.preview
+    this.playTracks()
+  }
+
+  playTracks() {
+    this.currentSong = new Howl({
+      src: [this.selectedPreview],
+      html5: true,
+      onend: () => {
+        console.log('Finished')
+      },
+      onplayerror: (_, msg) => {
+        console.log('Howl ERROR: ' + msg)
+      }
+    })
+    console.log(this.currentSong)
+
+    this.currentSong.play()
+  }
+
+  stopSong() {
+    this.currentSong?.stop()
   }
 
   onArtistSelected(artist: Artist) {

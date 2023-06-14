@@ -10,9 +10,11 @@
     </div>
     <div *ngFor="let song of songs">
       <div class="song-item">
-        <button class="play" (click)="playSong(song)"></button>
-        <span>Track {{ songs.indexOf(song) + 1 }}</span>
-        <audio *ngIf="currentPlayingSong === song" src={{song.preview}} controls></audio>
+        <button class="play" (click)="playSong(song)">Track {{ songs.indexOf(song) + 1 }}</button>
+        <button class="play" (click)="stopSong()">Stop Song</button>
+        <!-- <button class="play" (click)="playSong(song)"></button>
+        <span>Track {{ songs.indexOf(song) + 1 }}</span> -->
+        <!-- <audio *ngIf="currentPlayingSong === song" src={{song.preview}} controls autoplay></audio> -->
       </div>
     </div>
 
