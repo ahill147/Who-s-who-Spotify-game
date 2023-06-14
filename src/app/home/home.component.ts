@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from '@angular/router';
 import fetchFromSpotify, { request } from "../../services/api";
 import { Howl, Howler } from 'howler';
 
@@ -26,7 +27,7 @@ export interface Track {
 })
 
 export class HomeComponent implements OnInit {
-  constructor() { }
+  constructor(private router: Router) {}
 
   genres: String[] = ["House", "Alternative", "J-Rock", "R&B"];
   selectedGenre: String = "";
@@ -193,6 +194,7 @@ export class HomeComponent implements OnInit {
       allArtists: this.artistsArray
     }
     localStorage.setItem('gameData', JSON.stringify(obj))
+    this.router.navigate(['/game']);
   }
 
 }

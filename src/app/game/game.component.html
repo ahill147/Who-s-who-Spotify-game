@@ -1,4 +1,4 @@
-<div *ngIf="!gameOver">
+<!-- <div *ngIf="!gameOver">
     <h2>Guess the Artist</h2>
     <div class="inner-div">
       <div class="header">
@@ -24,10 +24,38 @@
             </div>
           </div>
         </div>
-        <!-- <audio *ngIf="currentPlayingSong === selectedPreview" [src]="song.preview" controls></audio> -->
+      </div> 
+
+  </div>
+  
+  <div *ngIf="gameOver">
+    <h2 *ngIf="isWinner">Congratulations, you win!</h2>
+    <h2 *ngIf="!isWinner">Oops, wrong guess. Try again!</h2>
+    <button (click)="restartGame()">Play Again</button>
+  </div> -->
+
+  <div *ngIf="!gameOver">
+    <h2>Guess the Artist</h2>
+    <div class="artist-info">
+      <div class="artist-image">
+        <img [src]="currentArtist.image" alt="Artist Image" />
       </div>
-
-
+      <div class="artist-name">
+        {{ currentArtist.name }}
+      </div>
+    </div>
+    <div *ngFor="let song of songs">
+      <div class="song-item">
+        <button class="play" (click)="playSong(song)"></button>
+        <span>{{ song.name }}</span>
+        <audio *ngIf="currentPlayingSong === song" [src]="song.preview" controls></audio>
+      </div>
+    </div>
+    <div class="artist-options">
+      <div *ngFor="let artist of artists" class="artist-option" (click)="checkAnswer(artist)">
+        {{ artist.name }}
+      </div>
+    </div>
   </div>
   
   <div *ngIf="gameOver">
