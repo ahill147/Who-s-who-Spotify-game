@@ -41,10 +41,14 @@ export class GameComponent implements OnInit {
     }
     this.gameOver = false;
     this.isWinner = false;
-  }
+  } 
 
   playSong(song: Song) {
     this.currentPlayingSong = song;
+  }
+
+  onArtistSelected(artist: Artist) {
+    this.currentArtist = artist;
   }
 
   checkAnswer(artist: Artist) {
