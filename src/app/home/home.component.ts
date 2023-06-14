@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from '@angular/router';
 import fetchFromSpotify, { request } from "../../services/api";
 import { Howl, Howler } from 'howler';
 
@@ -6,13 +7,13 @@ const AUTH_ENDPOINT =
   "https://nuod0t2zoe.execute-api.us-east-2.amazonaws.com/FT-Classroom/spotify-auth-token";
 const TOKEN_KEY = "whos-who-access-token";
 
-interface Artist {
+export interface Artist {
   id: string
   name: string
   image: string
 }
 
-interface Track {
+export interface Track {
   id: number
   artistId: string
   name: string
@@ -26,7 +27,7 @@ interface Track {
 })
 
 export class HomeComponent implements OnInit {
-  constructor() { }
+  constructor(private router: Router) {}
 
   genres: String[] = ["House", "Alternative", "J-Rock", "R&B"];
   selectedGenre: String = "";
@@ -35,6 +36,7 @@ export class HomeComponent implements OnInit {
   token: String = "";
 
   artistsArray: Artist[] = [];
+
   artistSongs: Track[] = [];
   selectedArtist: Artist | undefined = undefined;
   selectedSong: Track | undefined = undefined;
@@ -126,7 +128,6 @@ export class HomeComponent implements OnInit {
       artistArray[i] = artistArray[j]
       artistArray[j] = temp
     }
-
     // then we take previously selected number of artists and slice array using variable
     this.artistsArray = artistArray.slice(0, this.numArtistsChosen);
     // then select last element (since we are shuffling the array this should always produce diff results)
@@ -193,6 +194,7 @@ export class HomeComponent implements OnInit {
       allArtists: this.artistsArray
     }
     localStorage.setItem('gameData', JSON.stringify(obj))
+    this.router.navigate(['/game']);
   }
 
 }
