@@ -1,5 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { Router } from '@angular/router';
 import fetchFromSpotify, { request } from "../../services/api";
 import { Howl, Howler } from 'howler';
 
@@ -7,13 +6,13 @@ const AUTH_ENDPOINT =
   "https://nuod0t2zoe.execute-api.us-east-2.amazonaws.com/FT-Classroom/spotify-auth-token";
 const TOKEN_KEY = "whos-who-access-token";
 
-export interface Artist {
+interface Artist {
   id: string
   name: string
   image: string
 }
 
-export interface Track {
+interface Track {
   id: number
   artistId: string
   name: string
@@ -27,7 +26,7 @@ export interface Track {
 })
 
 export class HomeComponent implements OnInit {
-  constructor(private router: Router) {}
+  constructor() { }
 
   genres: String[] = ["House", "Alternative", "J-Rock", "R&B"];
   selectedGenre: String = "";
@@ -35,7 +34,7 @@ export class HomeComponent implements OnInit {
   configLoading: boolean = false;
   token: String = "";
 
-
+  artistsArray: Artist[] = [];
   artistSongs: Track[] = [];
   selectedArtist: Artist | undefined = undefined;
   selectedSong: Track | undefined = undefined;
@@ -157,7 +156,6 @@ export class HomeComponent implements OnInit {
       data[j] = temp
     }
 
-
     this.artistSongs = data.slice(0, this.numTracksChosen)
   }
 
@@ -195,7 +193,6 @@ export class HomeComponent implements OnInit {
       allArtists: this.artistsArray
     }
     localStorage.setItem('gameData', JSON.stringify(obj))
-    this.router.navigate(['/game']);
   }
 
 }
