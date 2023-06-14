@@ -1,5 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { Router } from '@angular/router';
 import fetchFromSpotify, { request } from "../../services/api";
 import { Howl, Howler } from 'howler';
 
@@ -27,7 +26,7 @@ export interface Track {
 })
 
 export class HomeComponent implements OnInit {
-  constructor(private router: Router) { }
+  constructor() { }
 
   genres: String[] = ["House", "Alternative", "J-Rock", "R&B"];
   selectedGenre: String = "";
@@ -104,7 +103,6 @@ export class HomeComponent implements OnInit {
     console.log(this.selectedGenre);
     console.log(TOKEN_KEY);
     this.getArtistData(this.token, selectedGenre)
-    this.getArtistData(this.token, selectedGenre)
   }
 
   // once a genre has been picked we will then call
@@ -159,18 +157,7 @@ export class HomeComponent implements OnInit {
     }
 
     this.artistSongs = data.slice(0, this.numTracksChosen)
-    // doing the same as the method above shuffling and slicing at given index
-    for(let i = data.length - 1; i > 0; i--) {
-      let j = Math.floor(Math.random() * (i + 1))
-      let temp = data[i]
-      data[i] = data[j]
-      data[j] = temp
-    }
-
-    this.artistSongs = data.slice(0, this.numTracksChosen)
   }
-
-  // everything below this line may have to be implmented on the game side
 
   // everything below this line may have to be implmented on the game side
 
@@ -206,7 +193,6 @@ export class HomeComponent implements OnInit {
       allArtists: this.artistsArray
     }
     localStorage.setItem('gameData', JSON.stringify(obj))
-    this.router.navigate(['/game']);
   }
 
 }

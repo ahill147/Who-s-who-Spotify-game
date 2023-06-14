@@ -42,23 +42,6 @@
     box-shadow: 0 0 4px lightblue;
   }
   
-  .dropdown {
-    height: 30px;
-    border-radius: 5px;
-  }
-  
   .button-div {
     padding: 20px;
-  }
-  
-  .start {
-    height: 40px;
-    border: none;
-    cursor: pointer;
-    background-color: lightblue;
-    color: white;
-    width: 140px;
-    font-size: 20px;
-    border-radius: 5px;
-    padding: 5px;
   }
