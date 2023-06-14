@@ -1,37 +1,32 @@
-  <div *ngIf="!gameOver">
-    <h2>Guess the Artist</h2>
-    <div class="artist-info">
-      <!-- <div class="artist-image">
-        <img [src]="currentArtist.image" alt="Artist Image" />
-      </div>
-      <div class="artist-name">
-        {{ currentArtist.name }}
-      </div> -->
+<div *ngIf="!gameOver">
+  <h2>Guess the Artist</h2>
+  <div class="artist-info"></div>
+  <div *ngFor="let song of songs">
+    <div class="song-item">
+      <button class="play" (click)="playSong(song)"></button>
+      <span>{{ song.name }}</span>
+      <audio *ngIf="currentPlayingSong === song" [src]="song.preview" controls></audio>
     </div>
-    <div *ngFor="let song of songs">
-      <div class="song-item">
-        <button class="play" (click)="playSong(song)"></button>
-        <span>{{ song.name }}</span>
-        <audio *ngIf="currentPlayingSong === song" [src]="song.preview" controls></audio>
-      </div>
-    </div>
-
-    <!-- Artist selection -->
-    <div class="selection-container">
-      <h2>Select the correct artist:</h2>
-      <div *ngFor="let artist of artists" class="artist-selection">
-        <input type="radio" name="selectedArtist" [value]="artist.name" (change)="onArtistSelected(artist)">
-        <label>{{ artist.name }}</label>
-      </div>
-    </div>
-
-    <!-- Display the artist pictures and names -->
-<div class="artist-container">
-  <div *ngFor="let artist of artists" class="artist-card">
-    <img [src]="artist.image" alt="Artist Image" class="artist-image">
-    <h3 class="artist-name">{{ artist.name }}</h3>
   </div>
 </div>
+
+  <!-- Artist selection -->
+  <div class="selection-container">
+    <h2>Select the correct artist:</h2>
+    <div *ngFor="let artist of artists" class="artist-selection">
+      <input type="radio" name="selectedArtist" [value]="artist.name" (change)="onArtistSelected(artist)">
+      <label>{{ artist.name }}</label>
+    </div>
+    <button (click)="checkAnswer()">Submit</button>
+  </div>
+
+  <!-- Display the artist pictures and names -->
+  <div class="artist-container">
+    <div *ngFor="let artist of artists" class="artist-card">
+      <img [src]="artist.image" alt="Artist Image" class="artist-image">
+      <h3 class="artist-name">{{ artist.name }}</h3>
+    </div>
+  </div>
 
   </div>
 
@@ -40,3 +35,5 @@
     <h2 *ngIf="!isWinner">Oops, wrong guess. Try again!</h2>
     <button (click)="restartGame()">Play Again</button>
   </div>
+
+</div>

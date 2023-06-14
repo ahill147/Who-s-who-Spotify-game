@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 interface Artist {
   name: string;
@@ -22,6 +23,8 @@ interface GameData {
   styleUrls: ['./game.component.css']
 })
 export class GameComponent implements OnInit {
+  constructor(private router: Router) {}
+
   gameData!: GameData;
   currentArtist!: Artist;
   songs!: Song[];
@@ -51,8 +54,11 @@ export class GameComponent implements OnInit {
     this.currentArtist = artist;
   }
 
-  checkAnswer(artist: Artist) {
-    if (artist === this.currentArtist) {
+  checkAnswer() {
+    console.log('Selected Artist:', this.currentArtist);
+    console.log('Current Artist:', this.gameData.winningArtist);
+  
+    if (this.currentArtist.name === this.gameData.winningArtist.name) {
       this.gameOver = true;
       this.isWinner = true;
     } else {
@@ -64,5 +70,6 @@ export class GameComponent implements OnInit {
   restartGame() {
     localStorage.removeItem('gameData');
     this.ngOnInit();
+    this.router.navigate(['/']);
   }
 }
