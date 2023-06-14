@@ -37,7 +37,6 @@ export class HomeComponent implements OnInit {
   token: String = "";
 
   artistsArray: Artist[] = [];
-
   artistSongs: Track[] = [];
   selectedArtist: Artist | undefined = undefined;
   selectedSong: Track | undefined = undefined;

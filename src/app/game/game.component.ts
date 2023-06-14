@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { GameService } from 'src/services/game';
+import { GameService } from '../../services/game';
 
 interface Artist {
-  id: number;
+  id?: string;
   name: string;
   image: string;
 }
 
 interface Song {
+  id?: number;
+  artistId?: string;
   name: string;
   preview: string;
 }
@@ -39,19 +41,24 @@ export class GameComponent implements OnInit {
     this.gameService.artistsArray.subscribe(artists => this.artists = artists);
     this.gameService.artistSongs.subscribe(songs => this.songs = songs);
     this.gameService.selectedArtist.subscribe(artist => this.currentArtist = artist);
-    const gameDataString = localStorage.getItem('gameData');
-    if (gameDataString) {
-      this.gameData = JSON.parse(gameDataString);
-      this.currentArtist = this.gameData.winningArtist;
-      this.songs = this.gameData.tracks;
-      this.artists = this.gameData.allArtists;
+    console.log(this.songs)
+    if(!this.artists.length) {
+      const gameDataString = localStorage.getItem('gameData');
+      if (gameDataString) {
+        this.gameData = JSON.parse(gameDataString);
+        this.currentArtist = this.gameData.winningArtist;
+        this.songs = this.gameData.tracks;
+        this.artists = this.gameData.allArtists;
+        console.log(this.songs)
+      }
+      this.gameOver = false;
+      this.isWinner = false;
     }
-    this.gameOver = false;
-    this.isWinner = false;
   }
 
   playSong(song: Song) {
     this.currentPlayingSong = song;
+    console.log(this.currentPlayingSong)
   }
 
   onArtistSelected(artist: Artist) {
