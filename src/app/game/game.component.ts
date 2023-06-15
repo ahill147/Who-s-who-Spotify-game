@@ -61,11 +61,6 @@ export class GameComponent implements OnInit {
     }
   }
 
-  // playSong(song: Track) {
-  //   this.currentPlayingSong = song;
-  //   console.log(this.currentPlayingSong)
-  // }
-
   playSong(selectedSong: Track) {
     this.currentPlayingSong = selectedSong;
     this.selectedPreview = selectedSong?.preview
@@ -83,7 +78,6 @@ export class GameComponent implements OnInit {
         console.log('Howl ERROR: ' + msg)
       }
     })
-    console.log(this.currentSong)
 
     this.currentSong.play()
   }

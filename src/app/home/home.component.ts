@@ -45,6 +45,7 @@ export class HomeComponent implements OnInit {
   trackNumber: number = 0
   error: string | undefined;
   temp = undefined
+  tracksLoading: boolean | undefined = undefined
 
   numArtistsChosen: number = 2
   numTracksChosen: number = 1
@@ -109,37 +110,65 @@ export class HomeComponent implements OnInit {
     this.error = undefined
   }
 
-  // once a genre has been picked we will then call
-  // this method to fetch top artists by the selected genre
-  getArtistData = async (t: any, genre: string) => {
+  fetchArtists = async (t: any, genre: string) => {
     const res = await fetchFromSpotify({
       token: t,
       endpoint: `search?q=genre:${genre}&type=artist&limit=50`
     })
-    const artistArray = res.artists.items.map((item: any) => {
+    const artistArray = res.artists.items.map((artist: any) => {
       return {
-        id: item.id,
-        name: item.name,
-        image: item.images[0].url
+        id: artist.id,
+        name: artist.name,
+        image: artist.images[0].url
       }
     })
-    console.log(res)
-    console.log(artistArray)
-    // durstenfeld shuffle to shuffle array
-    for(let i = artistArray.length - 1; i > 0; i--) {
+    return artistArray
+  }
+
+  checkTracksExist = async (t: any, artistId: string) => {
+    const res = await fetchFromSpotify({
+      token: t,
+      endpoint: `artists/${artistId}/top-tracks?market=US`
+    })
+    if(!res.tracks[0].preview_url) {
+      return false
+    } else {
+      return true
+    }
+  }
+
+  shuffle(array: any[]) {
+    for(let i = array.length - 1; i > 0; i--) {
       let j = Math.floor(Math.random() * (i + 1));
-      let temp = artistArray[i];
-      artistArray[i] = artistArray[j]
-      artistArray[j] = temp
+      let temp = array[i]
+      array[i] = array[j]
+      array[j] = temp
+    }
+    return array
+  }
+
+  // once a genre has been picked we will then call
+  // this method to fetch top artists by the selected genre
+  getArtistData = async (t: any, genre: string) => {
+    this.tracksLoading = true
+    let artistArray = await this.fetchArtists(t, genre)
+    this.shuffle(artistArray)
+    for(let i = 0; i < artistArray.length; i++) {
+      if(await this.checkTracksExist(t, artistArray[i].id)) {
+        artistArray = artistArray.slice(i)
+        break
+      }
     }
     // then we take previously selected number of artists and slice array using variable
     this.artistsArray = artistArray.slice(0, this.numArtistsChosen);
     this.gameData.updateArtistsArray(artistArray.slice(0, this.numArtistsChosen));
     // then select last element (since we are shuffling the array this should always produce diff results)
-    this.selectedArtist = this.artistsArray[this.artistsArray.length - 1]
-    this.gameData.updateSelectedArtist(this.artistsArray[this.artistsArray.length - 1])
+    this.selectedArtist = this.artistsArray[0]
+    this.gameData.updateSelectedArtist(this.artistsArray[0])
+    console.log('winning artist',this.selectedArtist)
     // then call next method to get the selected artists songs
     this.getArtistTracks(t, this.selectedArtist.id)
+    this.tracksLoading = false;
   }
 
   getArtistTracks = async (t: any, artistId: string) => {
@@ -147,7 +176,6 @@ export class HomeComponent implements OnInit {
       token: t,
       endpoint: `artists/${artistId}/top-tracks?market=US`
     });
-    console.log(res)
     const data = res.tracks.map((track: any, index: number) => {
       return {
         id: index + 1,
@@ -156,15 +184,7 @@ export class HomeComponent implements OnInit {
         preview: track?.preview_url
       }
     })
-    console.log(data)
-    // doing the same as the method above shuffling and slicing at given index
-    for(let i = data.length - 1; i > 0; i--) {
-      let j = Math.floor(Math.random() * (i + 1))
-      let temp = data[i]
-      data[i] = data[j]
-      data[j] = temp
-    }
-
+    this.shuffle(data)
     this.artistSongs = data.slice(0, this.numTracksChosen)
     this.gameData.updateArtistSongs(data.slice(0, this.numTracksChosen))
   }
@@ -188,8 +208,6 @@ export class HomeComponent implements OnInit {
         console.log('Howl ERROR: ' + msg)
       }
     })
-    console.log(this.currentSong)
-
     this.currentSong.play()
   }
 
