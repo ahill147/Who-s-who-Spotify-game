@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { GameService } from '../../services/game';
 import { Howl } from 'howler';
-import { GameService } from 'src/services/game';
+import { Router } from '@angular/router';
 
 interface Artist {
   id?: string;
@@ -18,8 +18,8 @@ interface Track {
 
 interface GameData {
   winningArtist: Artist;
-  tracks: Track[];
-  allArtists: Artist[];
+  artistSongs: Track[];
+  artistsArray: Artist[];
 }
 
 @Component({
@@ -28,9 +28,9 @@ interface GameData {
   styleUrls: ['./game.component.css']
 })
 export class GameComponent implements OnInit {
-
   gameData!: GameData;
-  currentArtist: Artist | undefined = undefined;
+  winningArtist: Artist | undefined = undefined;
+  playerSelectedArtist: Artist | undefined = undefined
   songs!: Track[];
   artists: Artist[] = [];
 
@@ -43,15 +43,49 @@ export class GameComponent implements OnInit {
   constructor(private gameService: GameService, private router: Router){}
 
   ngOnInit() {
-    const gameDataString = localStorage.getItem('gameData');
-    if (gameDataString) {
-      this.gameData = JSON.parse(gameDataString);
-      this.currentArtist = this.gameData.winningArtist;
-      this.songs = this.gameData.tracks;
-      this.artists = this.gameData.allArtists;
+    this.gameService.artistsArray.subscribe(artists => this.artists = artists);
+    this.gameService.artistSongs.subscribe(songs => this.songs = songs);
+    this.gameService.selectedArtist.subscribe(artist => this.winningArtist = artist);
+    console.log('Game Service (Songs): ', this.songs)
+    if(!this.artists.length) {
+      const gameDataString = localStorage.getItem('gameData');
+      if (gameDataString) {
+        this.gameData = JSON.parse(gameDataString);
+        this.winningArtist = this.gameData.winningArtist;
+        this.songs = this.gameData.artistSongs;
+        this.artists = this.gameData.artistsArray;
+        console.log('Local Storage (songs): ', this.songs)
+      }
+      this.gameOver = false;
+      this.isWinner = false;
     }
-    this.gameOver = false;
-    this.isWinner = false;
+  }
+
+  // playSong(song: Track) {
+  //   this.currentPlayingSong = song;
+  //   console.log(this.currentPlayingSong)
+  // }
+
+  playSong(selectedSong: Track) {
+    this.currentPlayingSong = selectedSong;
+    this.selectedPreview = selectedSong?.preview
+    this.playTracks()
+  }
+
+  playTracks() {
+    this.currentSong = new Howl({
+      src: [this.selectedPreview],
+      html5: true,
+      onend: () => {
+        console.log('Finished')
+      },
+      onplayerror: (_, msg) => {
+        console.log('Howl ERROR: ' + msg)
+      }
+    })
+    console.log(this.currentSong)
+
+    this.currentSong.play()
   }
 
   stopSong() {
@@ -59,14 +93,12 @@ export class GameComponent implements OnInit {
   }
 
   onArtistSelected(artist: Artist) {
-    this.currentArtist = artist;
+    this.playerSelectedArtist = artist;
   }
 
   checkAnswer() {
-    console.log('Selected Artist:', this.currentArtist);
-    console.log('Current Artist:', this.gameData.winningArtist);
-
-    if (this?.currentArtist?.name === this.gameData.winningArtist.name) {
+    this.stopSong()
+    if (this?.playerSelectedArtist?.id === this?.winningArtist?.id) {
       this.gameOver = true;
       this.isWinner = true;
     } else {

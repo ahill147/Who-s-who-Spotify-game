@@ -205,8 +205,8 @@ export class HomeComponent implements OnInit {
     }
     const obj = {
       winningArtist: this.selectedArtist,
-      tracks: this.artistSongs,
-      allArtists: this.artistsArray
+      artistSongs: this.artistSongs,
+      artistsArray: this.artistsArray
     }
     localStorage.setItem('gameData', JSON.stringify(obj))
     this.router.navigateByUrl('/game')
