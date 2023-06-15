@@ -8,21 +8,15 @@
     <div class="song-item">
       <button class="play" (click)="togglePlayStop(song)"> 
         <i class="fas fa-play"></i> 
-        Track {{ songs.indexOf(song) + 1 }}
+       <span> Track {{ songs.indexOf(song) + 1 }}</span>
       </button>
-      <!--<button class="play" (click)="stopSong()">
-        <i class="fas fa-stop"></i>Stop Song
-      </button> -->
-      <!-- <button class="play" (click)="playSong(song)"></button>
-      <span>{{ song.name }}</span>
-      <audio *ngIf="currentPlayingSong === song" [src]="song.preview" controls></audio> -->
     </div>
   </div>
 </div>
 </div>
 
 <!-- Artist selection -->
-<div class="selection-container">
+<div *ngIf="!gameOver" class="selection-container">
   <h2>Select the correct artist:</h2>
   <h4 *ngIf="!gameOver && isStillPlaying" class="still-playing-title">That was an incorrect selection, You still have {{ numGuesses }} guess left</h4>
   <div class="radio-btns">

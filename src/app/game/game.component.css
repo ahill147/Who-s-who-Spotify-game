@@ -1,4 +1,12 @@
-.container,
+.main,
+.head,
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+
 .head,
 .main,
 .selection-container,
@@ -17,7 +25,100 @@
   align-items: center;
   text-align: center;
   justify-content: center;
+  margin-bottom: 10px; /* Add some spacing between song items */
 }
+
+.song-item button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  padding: 0;
+  background: none;
+  color: #4704c4;
+  border: none;
+  cursor: pointer;
+}
+
+.song-item button .play-icon {
+  margin-right: 15px; /* Adjust the spacing between the play icon and the track number */
+}
+
+.song-item button span {
+  font-size: 18px; /* Decrease the font size of the track number */
+  color: #fff;
+}
+
+.gameBtn {
+  height: 40px;
+  width: 140px;
+  background-color: #4704c4;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-family: Arial, sans-serif;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.gameBtn:hover {
+  background-color: #5205e3;
+}
+
+
+.song-item button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  padding: 0;
+  background: none;
+  color: #4704c4;
+  border: none;
+  cursor: pointer;
+}
+
+.song-item button .play-icon {
+  margin-right: 5px; /* Adjust the spacing between the play icon and the track number */
+}
+
+.song-item button span {
+  font-size: 18px; /* Decrease the font size of the track number */
+}
+
+.gameBtn {
+  height: 40px;
+  width: 140px;
+  background-color: #4704c4;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-family: Arial, sans-serif;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.gameBtn:hover {
+  background-color: #5205e3;
+}
+
+
+
+
+
+
+
+
 
 .radio-btns {
   display: flex;
