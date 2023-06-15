@@ -39,6 +39,8 @@ export class GameComponent implements OnInit {
   selectedPreview: string = ''
   gameOver = false;
   isWinner = false;
+  numGuesses: number = 0
+  isStillPlaying: boolean = false
 
   constructor(private gameService: GameService, private router: Router){}
 
@@ -46,7 +48,7 @@ export class GameComponent implements OnInit {
     this.gameService.artistsArray.subscribe(artists => this.artists = artists);
     this.gameService.artistSongs.subscribe(songs => this.songs = songs);
     this.gameService.selectedArtist.subscribe(artist => this.winningArtist = artist);
-    console.log('Game Service (Songs): ', this.songs)
+    console.log('Game Service (songs): ', this.songs)
     if(!this.artists.length) {
       const gameDataString = localStorage.getItem('gameData');
       if (gameDataString) {
@@ -59,6 +61,22 @@ export class GameComponent implements OnInit {
       this.gameOver = false;
       this.isWinner = false;
     }
+    this.shuffle(this.artists)
+    if(localStorage.getItem('gameGuesses')) {
+      this.numGuesses = JSON.parse(localStorage.getItem('gameGuesses') || '{}');
+    } else {
+      this.numGuesses = this.artists.length < 4 ? 1 : 2
+    }
+  }
+
+  shuffle(array: any[]) {
+    for(let i = array.length - 1; i > 0; i--) {
+      let j = Math.floor(Math.random() * (i + 1));
+      let temp = array[i]
+      array[i] = array[j]
+      array[j] = temp
+    }
+    return array
   }
 
   playSong(selectedSong: Track) {
@@ -68,6 +86,9 @@ export class GameComponent implements OnInit {
   }
 
   playTracks() {
+    if(this.currentSong?.playing()) {
+      this.currentSong.stop()
+    }
     this.currentSong = new Howl({
       src: [this.selectedPreview],
       html5: true,
@@ -78,7 +99,7 @@ export class GameComponent implements OnInit {
         console.log('Howl ERROR: ' + msg)
       }
     })
-
+    console.log(this.currentSong)
     this.currentSong.play()
   }
 
@@ -92,12 +113,22 @@ export class GameComponent implements OnInit {
 
   checkAnswer() {
     this.stopSong()
+    this.numGuesses--
+    console.log(this.numGuesses)
     if (this?.playerSelectedArtist?.id === this?.winningArtist?.id) {
       this.gameOver = true;
       this.isWinner = true;
+      localStorage.removeItem('gameGuesses')
     } else {
-      this.gameOver = true;
-      this.isWinner = false;
+      if(this.numGuesses > 0) {
+        this.isStillPlaying = true
+        const obj = { numGuesses: this.numGuesses, isStillPlaying: this.isStillPlaying }
+        localStorage.setItem('gameGuesses', JSON.stringify(obj));
+      } else {
+        this.gameOver = true;
+        this.isWinner = false;
+        localStorage.removeItem('gameGuesses')
+      }
     }
   }
 

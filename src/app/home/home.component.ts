@@ -165,7 +165,6 @@ export class HomeComponent implements OnInit {
     // then select last element (since we are shuffling the array this should always produce diff results)
     this.selectedArtist = this.artistsArray[0]
     this.gameData.updateSelectedArtist(this.artistsArray[0])
-    console.log('winning artist',this.selectedArtist)
     // then call next method to get the selected artists songs
     this.getArtistTracks(t, this.selectedArtist.id)
     this.tracksLoading = false;
@@ -187,32 +186,6 @@ export class HomeComponent implements OnInit {
     this.shuffle(data)
     this.artistSongs = data.slice(0, this.numTracksChosen)
     this.gameData.updateArtistSongs(data.slice(0, this.numTracksChosen))
-  }
-
-  // everything below this line may have to be implmented on the game side
-
-  setSong(selectedSong: Track) {
-    this.selectedSong = selectedSong;
-    this.selectedPreview = selectedSong?.preview
-    this.playSong()
-  }
-
-  playSong() {
-    this.currentSong = new Howl({
-      src: [this.selectedPreview],
-      html5: true,
-      onend: () => {
-        console.log('Finished')
-      },
-      onplayerror: (_, msg) => {
-        console.log('Howl ERROR: ' + msg)
-      }
-    })
-    this.currentSong.play()
-  }
-
-  stopSong() {
-    this.currentSong?.stop()
   }
 
   onSubmit() {

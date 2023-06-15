@@ -12,23 +12,24 @@
   </div>
 </div>
 
-  <!-- Artist selection -->
-  <div class="selection-container">
-    <h2>Select the correct artist:</h2>
-    <div *ngFor="let artist of artists" class="artist-selection">
-      <input type="radio" name="selectedArtist" [value]="artist.name" (change)="onArtistSelected(artist)">
-      <label>{{ artist.name }}</label>
-    </div>
-    <button (click)="checkAnswer()">Submit</button>
+<!-- Artist selection -->
+<div class="selection-container">
+  <h2>Select the correct artist:</h2>
+  <h4 *ngIf="!gameOver && isStillPlaying" class="still-playing-title">That was an incorrect selection, You still have {{ numGuesses }} guess left</h4>
+  <div *ngFor="let artist of artists" class="artist-selection">
+    <input type="radio" name="selectedArtist" [value]="artist.name" (change)="onArtistSelected(artist)">
+    <label>{{ artist.name }}</label>
   </div>
+  <button (click)="checkAnswer()">Submit</button>
+</div>
 
-  <!-- Display the artist pictures and names -->
-  <div class="artist-container">
-    <div *ngFor="let artist of artists" class="artist-card">
-      <img [src]="artist.image" alt="Artist Image" class="artist-image">
-      <h3 class="artist-name">{{ artist.name }}</h3>
-    </div>
+<!-- Display the artist pictures and names -->
+<div class="artist-container">
+  <div *ngFor="let artist of artists" class="artist-card">
+    <img [src]="artist.image" alt="Artist Image" class="artist-image">
+    <h3 class="artist-name">{{ artist.name }}</h3>
   </div>
+</div>
 
 
 <div class="winOrLose">
