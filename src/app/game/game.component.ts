@@ -132,6 +132,16 @@ export class GameComponent implements OnInit {
     }
   }
 
+  togglePlayStop(song: Track) {
+    if (this.currentPlayingSong === song && this.currentSong?.playing()) {
+      // If the song is currently playing, stop it
+      this.stopSong();
+    } else {
+      // If the song is not playing, play it
+      this.playSong(song);
+    }
+  }
+
   restartGame() {
     localStorage.removeItem('gameData');
     this.ngOnInit();

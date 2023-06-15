@@ -1,62 +1,87 @@
-/**************************************************************************************************************************/
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+.container,
+.head,
+.main,
+.selection-container,
+.artist-image {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
 }
 
-/* Set the background color or image for the page */
-body {
-  background-color: #f0f0f0;
- }
+.song-item {
+  color: #4704c4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
 
-/* Set styles for the main container */
+.radio-btns {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: center;
+  justify-content: center;
+}
+
+.main,
+.head,
 .container {
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
 }
 
-/* Style the headings */
-h1, h2, h3 {
+h1,
+h2,
+h3,
+p,
+.artist-name {
   font-family: Arial, sans-serif;
   font-weight: bold;
-  color: #333;
+  color: #fff;
 }
 
-/* Style the paragraph text */
-p {
-  font-family: Arial, sans-serif;
-  color: #666;
-  line-height: 1.5;
-}
-
-/* Style the buttons */
 button {
-  padding: 10px 20px;
-  background-color: #333;
+  padding: 0;
+  background: none;
+  color: #4704c4;
+  border: none;
+  cursor: pointer;
+  margin-right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+}
+
+.gameBtn {
+  height: 40px;
+  width: 140px;
+  background-color: #4704c4;
   color: #fff;
   border: none;
   border-radius: 5px;
   font-family: Arial, sans-serif;
-  font-weight: bold;
+  font-size: 20px;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
-button:hover {
-  background-color: #555;
+.gameBtn:hover {
+  background-color: #5205e3;
 }
 
-/* Style the images */
 img {
   max-width: 100%;
   height: auto;
-  display: block;
-}
-
-/* Style the artist cards */
-.artist-card {
-  margin-bottom: 20px;
 }
 
 .artist-image {
@@ -66,43 +91,78 @@ img {
   border-radius: 50%;
 }
 
-.artist-name {
-  font-family: Arial, sans-serif;
-  font-weight: bold;
-  color: #333;
-  margin-top: 10px;
+.song-item,
+.artist-card {
+  margin-bottom: 20px;
 }
 
-/* Style the song items */
-.song-item {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
+.selection-container {
+  border: 1px solid lightblue;
+  padding: 10px;
+  padding-bottom: 10px;
+  border-radius: 15px;
+  box-shadow: 0 0 4px lightblue;
 }
 
 .play {
-  /* width: 30px; */
-  height: 30px;
-  /* background-image: url('path/to/play-icon.png'); */
-  background-size: cover;
+  width: 50px;
+  height: 50px;
+  background-color: none; /* Remove the background color */
   border: none;
   cursor: pointer;
+  margin-right: 10px;
+  display: flex; /* Add flex display to align items */
+  justify-content: center; /* Horizontally center the icon */
+  align-items: center; /* Vertically center the icon */
+  color: #4704c4; /* Set the color for the icon */
+  font-size: 24px; /* Adjust the font size of the icon */
+
 }
 
-/* Style the radio buttons and labels */
-.artist-selection input[type="radio"] {
-  margin-right: 5px;
+.artist-container {
+  display: flex;
+  flex-wrap: wrap; /* Allow images to wrap to the next line */
+  justify-content: center; /* Horizontally center the images */
+  align-items: center; /* Vertically center the images */
+  margin-top: 20px; /* Add some top margin */
 }
 
-/* Style the game over section */
-.game-over {
+.artist-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
-  margin-top: 20px;
+  justify-content: space-between;
+  margin: 10px; /* Add some margin around each card */
 }
 
-.game-over h2 {
+.winner {
+  font-weight: 500;
+  color: green;
+}
+
+.loser{
+  font-weight: 500;
+  color: red;
+}
+
+.playAgain {
+  height: 40px;
+  width: 140px;
+  background-color: #4704c4;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
   font-family: Arial, sans-serif;
-  font-weight: bold;
-  color: #333;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.playAgainBtn {
+  margin-left: 32%;
 }
