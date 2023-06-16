@@ -18,6 +18,11 @@
   margin-top: 10px;
 }
 
+.flashy {
+  color: #4704c4;
+  text-shadow: 0 0 1px white;
+}
+
 .start:hover{
   background-color: #5205e3;
 }
@@ -27,17 +32,17 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  border: 1px solid lightblue;
-  padding: 10px;
-  padding-bottom: 10px;
+  border: 1px solid #8e62df;
+  padding: 10px 10px 20px 10px;
   border-radius: 15px;
-  box-shadow: 0 0 4px lightblue;
+  box-shadow: 0 0 4px #8e62df;
 }
 
 .dropdown {
   height: 30px;
   color: black;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 .inner-div {
@@ -68,4 +73,8 @@
 .error {
   color: red;
   font-size: 14px;
+}
+
+.button-div {
+  height: 60px;
 }

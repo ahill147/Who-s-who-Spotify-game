@@ -3,7 +3,7 @@
 <div *ngIf="!authLoading && !configLoading" class="main">
   <div class="inner-div">
     <div class="header">
-      <h1 class="title">Who's Who</h1>
+      <h1 class="title">Who's <span class="flashy">Who</span></h1>
       <h5 class="disclaimer">(The Spotify guessing game)</h5>
       <p class="intro">Hello new player! Welcome to Who's Who, the Spotify guessing game!</p>
       <p class="intro">To get started please first choose how many artists you would like in the pool of artists to
@@ -37,7 +37,7 @@
       </select>
       <div *ngIf="error" class="error">{{ error }}</div>
       <div *ngIf="tracksLoading === true" class="loading">Generating Game...</div>
-      <div *ngIf="tracksLoading === false" class="button-div">
+      <div class="button-div" *ngIf="tracksLoading === false">
         <button class="start" (click)="onSubmit()">Start Game</button>
       </div>
     </div>
